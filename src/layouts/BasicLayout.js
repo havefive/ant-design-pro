@@ -78,7 +78,15 @@ class BasicLayout extends React.PureComponent {
   }
   onMenuClick = ({ key }) => {
     if (key === 'logout') {
-      this.props.dispatch(routerRedux.push('/user/login'));
+      this.props.dispatch({
+        type: 'login/logout',
+        payload: {
+          status: false,
+        },
+        callback: () => {
+          this.props.dispatch(routerRedux.push('/user/login'));
+        },
+      });
     }
   }
   getDefaultCollapsedSubMenus(props) {
@@ -178,7 +186,7 @@ class BasicLayout extends React.PureComponent {
           urgent: 'red',
           doing: 'gold',
         })[newNotice.status];
-        newNotice.extra = <Tag color={color}>{newNotice.extra}</Tag>;
+        newNotice.extra = <Tag color={color} style={{ marginRight: 0 }}>{newNotice.extra}</Tag>;
       }
       return newNotice;
     });
@@ -240,7 +248,6 @@ class BasicLayout extends React.PureComponent {
           trigger={null}
           collapsible
           collapsed={collapsed}
-          collapsedWidth={80}
           breakpoint="md"
           onCollapse={this.onCollapse}
           width={256}
@@ -340,7 +347,7 @@ class BasicLayout extends React.PureComponent {
             </Switch>
             <GlobalFooter
               links={[{
-                title: '使用文档',
+                title: 'Pro 首页',
                 href: 'http://pro.ant.design',
                 blankTarget: true,
               }, {

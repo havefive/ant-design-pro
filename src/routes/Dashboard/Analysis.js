@@ -36,11 +36,7 @@ export default class Analysis extends Component {
   componentDidMount() {
     this.props.dispatch({
       type: 'chart/fetch',
-    }).then(() => {
-      this.setState({
-        loading: false,
-      });
-    });
+    }).then(() => this.setState({ loading: false }));
   }
 
   componentWillUnmount() {
@@ -226,7 +222,6 @@ export default class Analysis extends Component {
         <Row gutter={24}>
           <Col {...topColResponsiveProps}>
             <ChartCard
-              loading={loading}
               bordered={false}
               title="总销售额"
               action={<Tooltip title="指标说明"><Icon type="info-circle-o" /></Tooltip>}
@@ -244,7 +239,6 @@ export default class Analysis extends Component {
           </Col>
           <Col {...topColResponsiveProps}>
             <ChartCard
-              loading={loading}
               bordered={false}
               title="访问量"
               action={<Tooltip title="指标说明"><Icon type="info-circle-o" /></Tooltip>}
@@ -261,7 +255,6 @@ export default class Analysis extends Component {
           </Col>
           <Col {...topColResponsiveProps}>
             <ChartCard
-              loading={loading}
               bordered={false}
               title="支付笔数"
               action={<Tooltip title="指标说明"><Icon type="info-circle-o" /></Tooltip>}
@@ -277,7 +270,6 @@ export default class Analysis extends Component {
           </Col>
           <Col {...topColResponsiveProps}>
             <ChartCard
-              loading={loading}
               bordered={false}
               title="运营活动效果"
               action={<Tooltip title="指标说明"><Icon type="info-circle-o" /></Tooltip>}
@@ -421,8 +413,6 @@ export default class Analysis extends Component {
                 dataSource={searchData}
                 pagination={{
                   style: { marginBottom: 0 },
-                  showSizeChanger: true,
-                  showQuickJumper: true,
                   pageSize: 5,
                 }}
               />
@@ -449,16 +439,17 @@ export default class Analysis extends Component {
               style={{ marginTop: 24 }}
             >
               <h4 style={{ marginTop: 8, marginBottom: 32 }}>销售额</h4>
-              <Pie
-                hasLegend
-                subTitle="销售额"
-                total={yuan(salesPieData.reduce((pre, now) => now.y + pre, 0))}
-                data={salesPieData}
-                valueFormat={val => yuan(val)}
-                height={240}
-                lineWidth={4}
-                style={{ marginBottom: 52 }}
-              />
+              <div style={{ marginBottom: 57 }}>
+                <Pie
+                  hasLegend
+                  subTitle="销售额"
+                  total={yuan(salesPieData.reduce((pre, now) => now.y + pre, 0))}
+                  data={salesPieData}
+                  valueFormat={val => yuan(val)}
+                  height={240}
+                  lineWidth={4}
+                />
+              </div>
             </Card>
           </Col>
         </Row>

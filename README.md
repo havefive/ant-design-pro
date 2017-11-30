@@ -19,7 +19,7 @@ We need your help: https://github.com/ant-design/ant-design-pro/issues/120
 
 ## Features
 
-- :gem: **Neat Design**: Follow Ant Design specification
+- :gem: **Neat Design**: Follow [Ant Design specification](http://ant.design/)
 - :triangular_ruler: **Common Templates**: Typical templates for enterprise applications
 - :rocket: **State of The Art Development**: Newest development stack of React/dva/antd
 - :iphone: **Responsive**: Designed for varies of screen size
@@ -64,7 +64,7 @@ We need your help: https://github.com/ant-design/ant-design-pro/issues/120
 ## Usage
 
 ```bash
-$ git clone git@github.com:ant-design/ant-design-pro --depth=1
+$ git clone https://github.com/ant-design/ant-design-pro.git --depth=1
 $ cd ant-design-pro
 $ npm install
 $ npm start         # visit http://localhost:8000

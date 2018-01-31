@@ -1,3 +1,5 @@
+import { isUrl } from '../utils/utils';
+
 const menuData = [{
   name: 'dashboard',
   icon: 'dashboard',
@@ -25,6 +27,7 @@ const menuData = [{
     path: 'step-form',
   }, {
     name: '高级表单',
+    authority: 'admin',
     path: 'advanced-form',
   }],
 }, {
@@ -64,6 +67,7 @@ const menuData = [{
   }, {
     name: '高级详情页',
     path: 'advanced',
+    authority: 'admin',
   }],
 }, {
   name: '结果页',
@@ -89,11 +93,16 @@ const menuData = [{
   }, {
     name: '500',
     path: '500',
+  }, {
+    name: '触发异常',
+    path: 'trigger',
+    hideInMenu: true,
   }],
 }, {
   name: '账户',
   icon: 'user',
   path: 'user',
+  authority: 'guest',
   children: [{
     name: '登录',
     path: 'login',
@@ -111,23 +120,22 @@ const menuData = [{
   target: '_blank',
 }];
 
-function formatter(data, parentPath = '') {
-  const list = [];
-  data.forEach((item) => {
-    if (item.children) {
-      list.push({
-        ...item,
-        path: `${parentPath}${item.path}`,
-        children: formatter(item.children, `${parentPath}${item.path}/`),
-      });
-    } else {
-      list.push({
-        ...item,
-        path: `${parentPath}${item.path}`,
-      });
+function formatter(data, parentPath = '', parentAuthority) {
+  return data.map((item) => {
+    let { path } = item;
+    if (!isUrl(path)) {
+      path = parentPath + item.path;
     }
+    const result = {
+      ...item,
+      path,
+      authority: item.authority || parentAuthority,
+    };
+    if (item.children) {
+      result.children = formatter(item.children, `${parentPath}${item.path}/`, item.authority);
+    }
+    return result;
   });
-  return list;
 }
 
 export const getMenuData = () => formatter(menuData);
